@@ -6,6 +6,22 @@
     <title></title>
 </head>
 <body>
+welcome<div id="content"></div>
 ddd.......htmlllllllllllllllll
 </body>
+<script src="page.js"></script>
+
+    <script>
+    setTimeout(function(){
+        var xhr = new XMLHttpRequest();
+        xhr.open('get','/ajax',true);
+        xhr.onreadystatechange = function(){
+            if(this.readyState == 4 && this.status == 200){
+                document.querySelector('#content').innerHTML = this.responseText;
+            }
+        }
+        xhr.send();
+    },5000);
+</script>
+
 </html>
