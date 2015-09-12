@@ -18,5 +18,5 @@ function say2(){
 //setTimeout(say(),3000);
 process.nextTick(say);
 setImmediate(say);
-console.log('welcome1');
+console.log('welcomefff1');
 console.log('welcome2');
