@@ -1,0 +1,11 @@
+var a=10;
+b=5;
+exports.a=a;
+console.log(__dirname);
+console.log(__filename);
+console.error();
+console.dir({name:'zfpx'});
+console.log({name:"zfpx"});
+console.log(JSON.stringify({name:'zfpx'}));
+console.trace('global');
+console.assert(2==2,'1 is not eq 2');
