@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+        var saleOffices={};
+        saleOffices.clientList=[];
+        saleOffices.listen=function(fn){
+            this.clientList.push(fn);
+        }
+        saleOffices.trigger=function(){
+            for(var i= 0,fn;fn=this.clientList[i++];){
+                fn.apply(this,arguments);
+            }
+        }
+        saleOffices.listen(function(price,squareMeter){
+            console.log('price= '+price+'squareMeter='+squareMeter);
+        })
+        saleOffices.listen(function(price,squareMeter){
+            console.log('price=: '+price+'squareMeter=:'+squareMeter);
+        })
+        saleOffices.trigger(2000,88);
+        saleOffices.trigger(3000,110);
+        </script>
+</head>
+<body>
+
+</body>
+</html>

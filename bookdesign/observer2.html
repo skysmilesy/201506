@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+        var saleOffices={};
+        saleOffices.clientList=[];
+        saleOffices.listen=function(key,fn){
+            if(!this.clientList[key]){
+                this.clientList[key]=[];
+            }
+            this.clientList[key].push(fn);
+        }
+        saleOffices.trigger=function(){
+            var key=Array.prototype.shift.call(arguments),
+                    fns=this.clientList[key];
+            if(!fns || fns.length === 0){
+                return false;
+            }
+            for(var i= 0,fn;fn=fns[i++];){
+                fn.apply(this,arguments);
+            }
+        }
+        saleOffices.listen('square88',function(price){
+            console.log('88price='+price);
+        })
+        saleOffices.listen('square110',function(price){
+            console.log('110price='+price);
+        })
+        saleOffices.trigger('square88',8000);
+        saleOffices.trigger('square110',1100);
+        </script>
+</head>
+<body>
+
+</body>
+</html>
