@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+</head>
+<body>
+
+</body> <script>
+    var myImage=(function(){
+        var imgNode=document.createElement('img');
+        document.body.appendChild(imgNode);
+        var odiv=document.createElement('div');
+        document.body.appendChild(odiv);
+        return function(src){
+            imgNode.src=src;
+        }
+    })()
+    var proxyImage=(function(){
+        var img=new Image;
+        img.onload=function(){
+            myImage(this.src);
+        }
+        return function(src){
+            myImage('http://d.hiphotos.baidu.com/image/w%3D400/sign=2a0be530334e251fe2f7e5f89786c9c2/d1160924ab18972bbf3847c0e5cd7b899e510abd.jpg');
+            img.src=src;
+        }
+    })()
+    proxyImage('http://g.hiphotos.baidu.com/image/pic/item/9922720e0cf3d7ca65622bb7f01fbe096a63a95e.jpg')
+</script>
+</html>

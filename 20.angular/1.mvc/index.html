@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="appModule">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div ng-controller="homeCtrl">
+  <p>{{name}}</p>
+  <p>{{money|currency:'@'}}</p>
+
+    <div ng-controller="homeCtrl2">
+        <p>{{name2}}</p>
+        <p>{{money|currency}}</p>
+        <button ng-click="show()">click</button>
+    </div>
+</div>
+
+</body>
+<script src="../angular.js"></script>
+<script>
+    var app=angular.module('appModule',[]);
+    app.controller('homeCtrl',function($rootScope,$scope,$timeout){
+       // $scope={};
+        $scope.name="z f p x";
+        $rootScope.money=99999;
+      //// $timeout(function(){
+      //     $scope.name=$scope.name+1;
+      // },1000)
+        setInterval(function(){
+            $scope.$apply(function(){
+                $scope.name=$scope.name+1;
+            });
+        },1000)
+        $scope.$watch('name',function(){
+            //console.log("ar you",$scope.name);
+        })
+    })
+
+    app.controller('homeCtrl2',function($rootScope,$scope){
+        $scope.name2="22222 ";
+       // $scope.money=888888;
+        $scope.show=function(){
+            $rootScope.money++;
+        }
+    })
+</script>
+</html>

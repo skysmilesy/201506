@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+select color:<select id="colorSelect">
+    <option>choice please</option>
+    <option>red</option>
+    <option>green</option>
+    <option>blue</option>
+</select>
+select memory:<select id="memorySelect">
+    <option>choice please</option>
+    <option>8G</option>
+    <option>16G</option>
+    <option>32G</option>
+</select>
+buy num:<input type="text" id="numberInput"/><br/>
+your choice color:<div id="colorInfo"></div>
+your choice memory:<div id="memoryInfo"></div>
+your choice number:<div id="numberInfo"></div>
+<button id="nextBtn" disabled="true">Choice phone color and number please?</button>
+</body>
+<script>
+    var goods={
+        "red|32G":3,
+        "green|8G":4,
+        "blue|16G":5,
+        "red|32G":6,
+        "red|8G":7,
+        "red|16G":8,
+    }
+    var mediator=(function(){
+        var colorSelect=document.getElementById('colorSelect'),
+                memorySelect=document.getElementById('memorySelect'),
+                numberInput=document.getElementById('numberInput'),
+                colorInfo=document.getElementById('colorInfo'),
+                memoryInfo=document.getElementById('memoryInfo'),
+                numberInfo=document.getElementById('numberInfo'),
+                nextBtn=document.getElementById('nextBtn');
+        return{
+            changed:function(obj){
+                var color=colorSelect.value,
+                     memory=memorySelect.value,
+                     number=numberInput.value,
+                        stock=goods[color+'|'+memory];
+                if(obj === colorSelect){
+                    colorInfo.innerHTML=color;
+                }else if(obj === memorySelect){
+                    memoryInfo.innerHTML=memory;
+                }else if( obj === numberInput){
+                    numberInfo.innerHTML=number;
+                }
+                if(!color){
+                    nextBtn.disabled=true;
+                    nextBtn.innerHTML="select color of phone please.";
+                    return;
+                }
+                if(!memory){
+                    nextBtn.disabled=true;
+                    nextBtn.innerHTML="select memory of phone please.";
+                    return;
+                }
+                if(( (number - 0)| 0)!== number - 0){
+                    nextBtn.disabled=true;
+                    nextBtn.innerHTML="input number correct please.";
+                    return;
+                }
+                nextBtn.disabled=false;
+                nextBtn.innerHTML="all in chart ****";
+            }
+        }
+    })();
+    colorSelect.onchange=function(){
+        mediator.changed(this);
+    };
+    memorySelect.onchange=function(){
+        mediator.changed(this);
+    };
+    numberInput.oninput=function(){
+        mediator.changed(this);
+    };
+    </script>
+</html>

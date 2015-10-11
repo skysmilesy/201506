@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="appModule">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body ng-controller="wordCtr">
+<input type="text" ng-model="word">
+{{word}}
+<p ng-bind="word"></p>
+<button ng-click="talk(word)">click me</button>
+</body>
+<script src="../angular.js"></script>
+<script>
+    var app=angular.module('appModule',[]);
+    app.controller('wordCtr',function($scope,$timeout){
+        $scope.word='hello';
+        $scope.$watch('word',function(){
+            console.log($scope.word);
+        })
+        $scope.talk=function(){
+
+
+
+        }
+    })
+
+</script>
+<script>
+
+    </script>
+</html>

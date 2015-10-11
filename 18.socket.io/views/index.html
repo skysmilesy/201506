@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css"/>
+    <style>
+        .user{
+            color:blue;
+            cursor:pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="panel panel-success">
+    <div class="panel-heading">欢迎加入聊天室
+        <button id="pinkRoom" class="btn btn-default">粉红回忆</button>
+        <button id="greenRoom" class="btn btn-default">青葱岁月</button>
+        <button id="exit" class="btn btn-danger">退回大厅</button>
+    </div>
+    <div class="panel-body">
+        <ul class="list-group" id="messages">
+        </ul>
+    </div>
+    <div class="panel-footer">
+        <div class="row">
+            <div class="col-md-9 col-xs-9"><input type="text" id="txtMsg" class="form-control"/> </div>
+            <div class="col-md-3 col-xs-3"><button type="button" id="sendBtn" class="btn btn-default">发言</button></div>
+        </div>
+    </div>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="../bower_components/jquery/dist/jquery.js"></script>
+<script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script>
+    var socket = io();//发起连接服务器请求
+    socket.on('connect',function(){
+        console.log('已经连接上了');
+    });
+    socket.on('disconnect',function(){
+    });
+    socket.on('error',function(content){
+    });
+    //接收到服务器消息 把此消息追加到消息列表里
+    socket.on('message',function(msg){
+        $('#messages').append('<li class="list-group-item"><span class="user">'+msg.user+'</span>:'+msg.content+'</li>');
+    });
+    //当点击发言按钮的时候把文本内容取出并发给服务器
+    $('#sendBtn').click(function(){
+        socket.send($('#txtMsg').val());
+        $('#txtMsg').val('');
+    });
+    $('#txtMsg').keypress(function(e){
+        if(e.which == 13){
+            socket.send($('#txtMsg').val());
+            $('#txtMsg').val('');
+        }
+    });
+    $('body').delegate('.user','click',function(){
+        $('#txtMsg').val('@'+$(this).text()+' ');
+    });
+    $('#pinkRoom').click(function(){
+        //socket.send('pinkRoom');
+        socket.emit('inRoom','pinkRoom');
+    });
+    $('#greenRoom').click(function(){
+        //socket.send('greenRoom');
+        socket.emit('inRoom','greenRoom');
+    });
+    $('#exit').click(function(){
+        //socket.send('greenRoom');
+        socket.emit('inRoom','hall');
+    });
+</script>
+</body>
+</html>

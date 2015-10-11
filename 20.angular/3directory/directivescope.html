@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="appModule">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .red{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div ng-controller="GirlCtrl">
+    <input type="text" ng-model="age"/>
+    <input type="text" ng-model="girlname"/>
+    <girl beautiful kind word="word" hit="hit({{word.name}})" age="age" girlname="@{{'#'+girlname}}@"></girl>
+</div>
+</body>
+<script src="../angular.js"></script>
+<script>
+    //定义一个模块
+    var app = angular.module('appModule',[]);
+    app.controller('GirlCtrl',function($scope){
+        $scope.girlname = '彭girl';
+        $scope.hit = function(){
+            alert('hit '+arguments[0]);
+        }
+        $scope.word = {name:'word'};
+    });
+    app.directive('girl',function(){
+        return {
+            restrict:'E',
+            controller:function($scope){
+                $scope.style = [];//所拥有的品德
+                this.add = function(item){
+                    $scope.style.push(item);
+                }
+            },
+            scope:{
+                word:'=',
+                hit:'&',//可以用来调用父控制器上的一个函数，还可以传参数
+                age:'=',//把当前的age指向所属的控制器上的scope上的属性
+                girlname:'@'//把当前的girlname等于本指令girlname属性对应的值
+            },//为这个指令创建一个独立scope
+            replace:false,
+            transclude:true,
+            template:'<div> {{girlname}}{{age}}</div>',
+            link:function(scope,element,attrs){
+                element.bind('mouseover',function(){
+                    console.log('mouseover');
+                    element.addClass('red');
+                });
+                element.bind('click',function(){
+                    // alert(scope.girlname);
+                    //scope.hit();
+                    scope.hit();
+                    //alert(scope.word.name);
+                });
+            }
+        }
+    });
+    app.directive('beautiful',function(){
+        return {
+            restrict:'A',
+            require:'^girl',
+            link:function(scope,element,attrs,girlCtrl){
+                girlCtrl.add('beautiful');
+            }
+        }
+    });
+    app.directive('kind',function(){
+        return {
+            restrict:'A',
+            require:'^girl',
+            link:function(scope,element,attrs,girlCtrl){
+                girlCtrl.add('kind');
+            }
+        }
+    });
+</script>
+</html>

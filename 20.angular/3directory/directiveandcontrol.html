@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="appModule">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div ng-controller="Ctr1">
+    <person like="fight()">su hu kong</person>
+    {{hobby}}
+
+</div>
+<div ng-controller="Ctr2">
+<person like="eat()">zhu ba jie</person> {{hobby}}
+</div>
+</div>
+
+</body>
+<script src="../angular.js"></script>
+<script>
+    var app=angular.module('appModule',[]);
+
+    app.controller('Ctr1',function($scope,$rootScope){
+        $rootScope.log=function(){
+            console.log('log write');
+        }
+        $scope.hobby='fighting';
+        $scope.fight=function(){
+            alert("like ==="+$scope.hobby);
+        }
+
+    })
+    app.controller('Ctr2',function($scope,$rootScope){
+        $rootScope.log=function(){
+            console.log('log write');
+        }
+        $scope.hobby='eat';
+        $scope.eat=function(){
+            alert("like ==="+$scope.hobby);
+        }
+
+    })
+    app.directive('person',function(){
+        return{
+            restrict:'E',
+            link:function(scope,element,attrs){
+                element.bind('click',function(){
+                    scope.log();
+                   // scope.$apply('fight()');
+                  //  scope.$apply(attrs.like);
+                   // scope.$apply(element.attr('like'));
+                    scope.$apply(attrs.like);
+                });
+            }
+        }
+    })
+
+
+
+</script>
+</html>

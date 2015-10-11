@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+</head>
+<body>
+<input type="checkbox" id="1">input1
+<input type="checkbox" id="2">input23
+<input type="checkbox" id="3">input4
+<input type="checkbox" id="4">input5
+<input type="checkbox" id="5">input6
+<input type="checkbox" id="6">input7
+<input type="checkbox" id="7">input8
+<input type="checkbox" id="8">input9
+<input type="checkbox" id="9">input
+</body>
+<script>
+    var synchronousFile=function(id){
+        console.log('开始文件同步，id:'+id);
+    }
+    var proxySynchronousFile=(function(){
+        var cache=[],timer;
+        return function(id){
+            cache.push(id);
+            if(timer){
+                return;
+            }
+            timer=setTimeout(function(){
+                synchronousFile(cache.join(','));
+                clearTimeout(timer);
+                timer=null;
+                cache.length=0;
+            },2000);
+        }
+    })()
+    var checkbox=document.getElementsByTagName('input');
+    for(var i= 0,c;c=checkbox[i++];){
+        c.onclick=function(){
+            if(this.checked===true){
+                proxySynchronousFile(this.id);
+            }
+        }
+    }
+</script>
+</html>

@@ -11,6 +11,4 @@ process.stdin.on('data',function(data){
 });
 console.log(process.cwd());
 console.log(__dirname);
-process.chdir('..');
-console.log(process.cwd());
-console.log(__dirname);
+process.chdir('..')

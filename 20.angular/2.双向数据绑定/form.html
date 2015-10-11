@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="appModule">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body ng-controller="userCtrl">
+<form action="">
+    <input type="text" name="username" ng-model="">
+    <input type="text" name="email" ng-model="email">
+    <button ng-click="save()">save</button>
+    <button ng-click="reset()">reset</button>
+    </form>
+</body>
+<script src="../angular.js"></script>
+<script>
+    angular.module('appModule',[])
+            .controller('userCtrl',function($scope,$http){
+                $scope.user={username:'zhangsan',email:'abll@126.com'}
+                $scope.reset=function(){
+                    $scope.user={};
+                }
+                $scope.save=function(){
+                    $http({
+url:
+                    })
+                }
+            })
+</script>
+</html>

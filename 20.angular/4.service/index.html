@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="appModule">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body >
+<div ng-controller="MyCtrl">
+    {{age}}{{name}}
+    <div>{{today}}{{tomorrow}}</div>
+</div>
+<script src="../angular.js"></script>
+<script>
+    //定义一个模块
+    var app = angular.module('appModule',[]);
+    /**
+     * 定制provider
+     * 1 可配置
+     * 2.定义的是一个对象,必须有一个$get函数属性
+     * 3.返回的是$get函数的返回值
+     */
+    app.provider('ageService',{
+        age:100,
+        get:function(){
+            return this.age;
+        },
+        $get:function(){//必须提供
+            return {age:this.get(),name:this.get};
+        }
+    });
+    //配置provider
+    /**
+     * 1.只有constant能够注入config
+     * 2.constant注入的时候不需要加Provider
+     */
+    app.config(function(ageServiceProvider,tomorrow){
+        ageServiceProvider.age = 250;
+        console.log(tomorrow.constantkey)
+    });
+    app.factory('ageService',function(){//必须提供
+        return "ddd";
+    });
+    app.service('ageService',function(){
+        this.age = 120;
+        this.name = 130;
+    });
+    app.value('today',{'key':'value'});//可以修改
+    app.constant('tomorrow',{'constantkey':'constantvalue'});//常量，定义之后不能修改
+    app.controller('MyCtrl',function($scope,ageService,today,tomorrow){
+        $scope.age = ageService.age;
+        $scope.name = ageService.name;
+        $scope.today = today;
+        $scope.tomorrow = tomorrow;
+    });
+</script>
+</body>
+</html>

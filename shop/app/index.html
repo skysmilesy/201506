@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="appModule">
+<head>
+    <meta charset="UTF-8">
+    <title>z f shop</title>
+</head>
+<body >
+<ul>
+    <li><a href="#/home">首页</a></li>
+    <li><a href="#/user/login">登录</a></li>
+    <li><a href="#/user/regist">注册</a></li>
+</ul>
+<div ng-view></div>
+</body>
+<script src="public/lib/bootstrap/dist/css/bootstrap.css"></script>
+<script src="public/lib/jquery/dist/jquery.js"></script>
+<script src="public/lib/angular/angular.js"></script>
+<script src="ublic/lib/angular-route/angular-route.js"></script>
+<script>
+    var app=angular.module('appModule',[ngRoute]);
+    app.config(function($routeProvider){
+        $routeProvider.when('/',{
+            templateUrl:'pages/home.html',
+            controller:'homeCtr'
+        }).when('/user/login',{
+            templateUrl:'pages/home.html',
+            controller:'loginCtr'
+        }).when('/user/regist',{
+            templateUrl:'pages/home.html',
+            controller:'registerCtr'
+        })
+    })
+    app.controller('homeCtr',function($scope){
+
+    })
+    app.controller('loginCtr',function($scope){
+
+    })
+    app.controller('registerCtr',function($scope){
+
+    })
+</script>
+</html>
